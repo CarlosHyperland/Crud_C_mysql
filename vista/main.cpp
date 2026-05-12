@@ -1,6 +1,7 @@
 #include <iostream>
 #include <regex>
 #include "Estudiante.h"
+#include <ctime>
 
 using namespace std;
 
@@ -241,8 +242,96 @@ int main() {
 
 			} while (!telefono_valido);
 
-			cout << "Ingrese Fecha Nacimiento: ";
-			getline(cin, fecha_nacimiento);
+			// VALIDACION FECHA NACIMIENTO
+
+			bool fecha_valida = false;
+
+			do {
+
+				cout << "Ingrese Fecha Nacimiento (AAAA-MM-DD): ";
+				getline(cin, fecha_nacimiento);
+
+				if (fecha_nacimiento.empty()) {
+
+					cout << "Error: La fecha es obligatoria." << endl;
+				}
+				else {
+
+					regex formato_fecha("^\\d{4}-\\d{2}-\\d{2}$");
+
+					if (!regex_match(fecha_nacimiento, formato_fecha)) {
+
+						cout << "Error: Formato invalido. Use AAAA-MM-DD." << endl;
+					}
+					else {
+
+						int anio = stoi(fecha_nacimiento.substr(0, 4));
+						int mes = stoi(fecha_nacimiento.substr(5, 2));
+						int dia = stoi(fecha_nacimiento.substr(8, 2));
+
+						bool fecha_correcta = true;
+
+						// VALIDAR MES
+
+						if (mes < 1 || mes > 12) {
+
+							fecha_correcta = false;
+						}
+
+						// DIAS POR MES
+
+						int dias_mes[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+						// AÑO BISIESTO
+
+						if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0)) {
+
+							dias_mes[1] = 29;
+						}
+
+						// VALIDAR DIA
+
+						if (fecha_correcta) {
+
+							if (dia < 1 || dia > dias_mes[mes - 1]) {
+
+								fecha_correcta = false;
+							}
+						}
+
+						// VALIDAR FECHA FUTURA
+
+						time_t t = time(0);
+
+						tm tiempo;
+
+						localtime_s(&tiempo, &t);
+
+						int anio_actual = tiempo.tm_year + 1900;
+						int mes_actual = tiempo.tm_mon + 1;
+						int dia_actual = tiempo.tm_mday;
+
+						if (
+							anio > anio_actual ||
+							(anio == anio_actual && mes > mes_actual) ||
+							(anio == anio_actual && mes == mes_actual && dia > dia_actual)
+							) {
+
+							fecha_correcta = false;
+						}
+
+						if (!fecha_correcta) {
+
+							cout << "Error: La fecha no es valida o es futura." << endl;
+						}
+						else {
+
+							fecha_valida = true;
+						}
+					}
+				}
+
+			} while (!fecha_valida);
 
 			cout << "Ingrese Tipo Sangre: ";
 			cin >> id_tipo_sangre;
@@ -482,8 +571,96 @@ int main() {
 
 			} while (!telefono_valido);
 
-			cout << "Ingrese Fecha Nacimiento: ";
-			getline(cin, fecha_nacimiento);
+			// VALIDACION FECHA NACIMIENTO
+
+			bool fecha_valida = false;
+
+			do {
+
+				cout << "Ingrese Fecha Nacimiento (AAAA-MM-DD): ";
+				getline(cin, fecha_nacimiento);
+
+				if (fecha_nacimiento.empty()) {
+
+					cout << "Error: La fecha es obligatoria." << endl;
+				}
+				else {
+
+					regex formato_fecha("^\\d{4}-\\d{2}-\\d{2}$");
+
+					if (!regex_match(fecha_nacimiento, formato_fecha)) {
+
+						cout << "Error: Formato invalido. Use AAAA-MM-DD." << endl;
+					}
+					else {
+
+						int anio = stoi(fecha_nacimiento.substr(0, 4));
+						int mes = stoi(fecha_nacimiento.substr(5, 2));
+						int dia = stoi(fecha_nacimiento.substr(8, 2));
+
+						bool fecha_correcta = true;
+
+						// VALIDAR MES
+
+						if (mes < 1 || mes > 12) {
+
+							fecha_correcta = false;
+						}
+
+						// DIAS POR MES
+
+						int dias_mes[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+						// AÑO BISIESTO
+
+						if ((anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0)) {
+
+							dias_mes[1] = 29;
+						}
+
+						// VALIDAR DIA
+
+						if (fecha_correcta) {
+
+							if (dia < 1 || dia > dias_mes[mes - 1]) {
+
+								fecha_correcta = false;
+							}
+						}
+
+						// VALIDAR FECHA FUTURA
+
+						time_t t = time(0);
+
+						tm tiempo;
+
+						localtime_s(&tiempo, &t);
+
+						int anio_actual = tiempo.tm_year + 1900;
+						int mes_actual = tiempo.tm_mon + 1;
+						int dia_actual = tiempo.tm_mday;
+
+						if (
+							anio > anio_actual ||
+							(anio == anio_actual && mes > mes_actual) ||
+							(anio == anio_actual && mes == mes_actual && dia > dia_actual)
+							) {
+
+							fecha_correcta = false;
+						}
+
+						if (!fecha_correcta) {
+
+							cout << "Error: La fecha no es valida o es futura." << endl;
+						}
+						else {
+
+							fecha_valida = true;
+						}
+					}
+				}
+
+			} while (!fecha_valida);
 
 			cout << "Ingrese Tipo Sangre: ";
 			cin >> id_tipo_sangre;
