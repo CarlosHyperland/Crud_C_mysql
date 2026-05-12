@@ -112,11 +112,71 @@ int main() {
 
 			} while (!codigo_valido);
 
-			cout << "Ingrese Nombres: ";
-			getline(cin, nombres);
+			// VALIDACION NOMBRES
 
-			cout << "Ingrese Apellidos: ";
-			getline(cin, apellidos);
+			bool nombres_validos = false;
+
+			do {
+
+				cout << "Ingrese Nombres: ";
+				getline(cin, nombres);
+
+				if (nombres.empty()) {
+
+					cout << "Error: El nombre es obligatorio." << endl;
+				}
+				else if (nombres.length() > 60) {
+
+					cout << "Error: El nombre no puede tener mas de 60 caracteres." << endl;
+				}
+				else {
+
+					regex formato_nombre("^[A-Za-z ]+$");
+
+					if (!regex_match(nombres, formato_nombre)) {
+
+						cout << "Error: El nombre solo debe contener letras y espacios." << endl;
+					}
+					else {
+
+						nombres_validos = true;
+					}
+				}
+
+			} while (!nombres_validos);
+
+			// VALIDACION APELLIDOS
+
+			bool apellidos_validos = false;
+
+			do {
+
+				cout << "Ingrese Apellidos: ";
+				getline(cin, apellidos);
+
+				if (apellidos.empty()) {
+
+					cout << "Error: El apellido es obligatorio." << endl;
+				}
+				else if (apellidos.length() > 60) {
+
+					cout << "Error: El apellido no puede tener mas de 60 caracteres." << endl;
+				}
+				else {
+
+					regex formato_apellido("^[A-Za-z ]+$");
+
+					if (!regex_match(apellidos, formato_apellido)) {
+
+						cout << "Error: El apellido solo debe contener letras y espacios." << endl;
+					}
+					else {
+
+						apellidos_validos = true;
+					}
+				}
+
+			} while (!apellidos_validos);
 
 			cout << "Ingrese Direccion: ";
 			getline(cin, direccion);
@@ -237,11 +297,71 @@ int main() {
 
 			} while (!codigo_valido);
 
-			cout << "Ingrese Nombres: ";
-			getline(cin, nombres);
+			// VALIDACION NOMBRES
 
-			cout << "Ingrese Apellidos: ";
-			getline(cin, apellidos);
+			bool nombres_validos = false;
+
+			do {
+
+				cout << "Ingrese Nombres: ";
+				getline(cin, nombres);
+
+				if (nombres.empty()) {
+
+					cout << "Error: El nombre es obligatorio." << endl;
+				}
+				else if (nombres.length() > 60) {
+
+					cout << "Error: El nombre no puede tener mas de 60 caracteres." << endl;
+				}
+				else {
+
+					regex formato_nombre("^[A-Za-z ]+$");
+
+					if (!regex_match(nombres, formato_nombre)) {
+
+						cout << "Error: El nombre solo debe contener letras y espacios." << endl;
+					}
+					else {
+
+						nombres_validos = true;
+					}
+				}
+
+			} while (!nombres_validos);
+
+			// VALIDACION APELLIDOS
+
+			bool apellidos_validos = false;
+
+			do {
+
+				cout << "Ingrese Apellidos: ";
+				getline(cin, apellidos);
+
+				if (apellidos.empty()) {
+
+					cout << "Error: El apellido es obligatorio." << endl;
+				}
+				else if (apellidos.length() > 60) {
+
+					cout << "Error: El apellido no puede tener mas de 60 caracteres." << endl;
+				}
+				else {
+
+					regex formato_apellido("^[A-Za-z ]+$");
+
+					if (!regex_match(apellidos, formato_apellido)) {
+
+						cout << "Error: El apellido solo debe contener letras y espacios." << endl;
+					}
+					else {
+
+						apellidos_validos = true;
+					}
+				}
+
+			} while (!apellidos_validos);
 
 			cout << "Ingrese Direccion: ";
 			getline(cin, direccion);
