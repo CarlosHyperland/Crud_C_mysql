@@ -333,8 +333,65 @@ int main() {
 
 			} while (!fecha_valida);
 
-			cout << "Ingrese Tipo Sangre: ";
-			cin >> id_tipo_sangre;
+			// VALIDACION ID TIPO SANGRE
+
+			bool sangre_valida = false;
+
+			do {
+
+				cout << "Ingrese Tipo Sangre: ";
+
+				if (!(cin >> id_tipo_sangre)) {
+
+					cout << "Error: Solo se permiten numeros." << endl;
+
+					cin.clear();
+					cin.ignore(1000, '\n');
+				}
+				else {
+
+					ConexionBD cn;
+
+					cn.abrir_conexion();
+
+					if (cn.getConector()) {
+
+						string consulta =
+							"SELECT id_tipos_sangre FROM tipos_sangre WHERE id_tipos_sangre = " +
+							to_string(id_tipo_sangre) + ";";
+
+						const char* c = consulta.c_str();
+
+						int q_estado = mysql_query(cn.getConector(), c);
+
+						if (!q_estado) {
+
+							MYSQL_RES* resultado;
+							MYSQL_ROW fila;
+
+							resultado = mysql_store_result(cn.getConector());
+
+							fila = mysql_fetch_row(resultado);
+
+							if (fila) {
+
+								sangre_valida = true;
+							}
+							else {
+
+								cout << "Error: El tipo de sangre no existe." << endl;
+							}
+
+							mysql_free_result(resultado);
+						}
+					}
+
+					cn.cerrar_conexion();
+				}
+
+				cin.ignore();
+
+			} while (!sangre_valida);
 
 			Estudiante e = Estudiante(
 				nombres,
@@ -662,8 +719,65 @@ int main() {
 
 			} while (!fecha_valida);
 
-			cout << "Ingrese Tipo Sangre: ";
-			cin >> id_tipo_sangre;
+			// VALIDACION ID TIPO SANGRE
+
+			bool sangre_valida = false;
+
+			do {
+
+				cout << "Ingrese Tipo Sangre: ";
+
+				if (!(cin >> id_tipo_sangre)) {
+
+					cout << "Error: Solo se permiten numeros." << endl;
+
+					cin.clear();
+					cin.ignore(1000, '\n');
+				}
+				else {
+
+					ConexionBD cn;
+
+					cn.abrir_conexion();
+
+					if (cn.getConector()) {
+
+						string consulta =
+							"SELECT id_tipos_sangre FROM tipos_sangre WHERE id_tipos_sangre = " +
+							to_string(id_tipo_sangre) + ";";
+
+						const char* c = consulta.c_str();
+
+						int q_estado = mysql_query(cn.getConector(), c);
+
+						if (!q_estado) {
+
+							MYSQL_RES* resultado;
+							MYSQL_ROW fila;
+
+							resultado = mysql_store_result(cn.getConector());
+
+							fila = mysql_fetch_row(resultado);
+
+							if (fila) {
+
+								sangre_valida = true;
+							}
+							else {
+
+								cout << "Error: El tipo de sangre no existe." << endl;
+							}
+
+							mysql_free_result(resultado);
+						}
+					}
+
+					cn.cerrar_conexion();
+				}
+
+				cin.ignore();
+
+			} while (!sangre_valida);
 
 			Estudiante e;
 
