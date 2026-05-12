@@ -1,4 +1,5 @@
 #include <iostream>
+#include <regex>
 #include "Estudiante.h"
 
 using namespace std;
@@ -40,9 +41,76 @@ int main() {
 
 			cout << "\n===== CREAR ESTUDIANTE =====" << endl;
 
-			cout << "Ingrese Codigo: ";
-			cin >> codigo;
-			cin.ignore();
+			// VALIDACION CODIGO
+
+			bool codigo_valido = false;
+
+			do {
+
+				cout << "Ingrese Codigo: ";
+				cin >> codigo;
+				cin.ignore();
+
+				if (codigo.empty()) {
+
+					cout << "Error: El codigo es obligatorio." << endl;
+				}
+				else if (codigo.length() > 4) {
+
+					cout << "Error: El codigo solo puede tener 4 caracteres." << endl;
+				}
+				else {
+
+					regex formato_codigo("^E[0-9]{3}$");
+
+					if (!regex_match(codigo, formato_codigo)) {
+
+						cout << "Error: Formato invalido. Ejemplo: E001" << endl;
+					}
+					else {
+
+						// VALIDAR CODIGO DUPLICADO
+
+						ConexionBD cn;
+
+						cn.abrir_conexion();
+
+						if (cn.getConector()) {
+
+							string consulta =
+								"SELECT codigo FROM estudiantes WHERE codigo = '" + codigo + "';";
+
+							const char* c = consulta.c_str();
+
+							int q_estado = mysql_query(cn.getConector(), c);
+
+							if (!q_estado) {
+
+								MYSQL_RES* resultado;
+								MYSQL_ROW fila;
+
+								resultado = mysql_store_result(cn.getConector());
+
+								fila = mysql_fetch_row(resultado);
+
+								if (fila) {
+
+									cout << "Error: El codigo ya existe." << endl;
+								}
+								else {
+
+									codigo_valido = true;
+								}
+
+								mysql_free_result(resultado);
+							}
+						}
+
+						cn.cerrar_conexion();
+					}
+				}
+
+			} while (!codigo_valido);
 
 			cout << "Ingrese Nombres: ";
 			getline(cin, nombres);
@@ -97,9 +165,77 @@ int main() {
 			cin >> id_estudiante;
 			cin.ignore();
 
-			cout << "Ingrese Codigo: ";
-			cin >> codigo;
-			cin.ignore();
+			// VALIDACION CODIGO
+
+			bool codigo_valido = false;
+
+			do {
+
+				cout << "Ingrese Codigo: ";
+				cin >> codigo;
+				cin.ignore();
+
+				if (codigo.empty()) {
+
+					cout << "Error: El codigo es obligatorio." << endl;
+				}
+				else if (codigo.length() > 4) {
+
+					cout << "Error: El codigo solo puede tener 4 caracteres." << endl;
+				}
+				else {
+
+					regex formato_codigo("^E[0-9]{3}$");
+
+					if (!regex_match(codigo, formato_codigo)) {
+
+						cout << "Error: Formato invalido. Ejemplo: E001" << endl;
+					}
+					else {
+
+						// VALIDAR CODIGO DUPLICADO
+
+						ConexionBD cn;
+
+						cn.abrir_conexion();
+
+						if (cn.getConector()) {
+
+							string consulta =
+								"SELECT codigo FROM estudiantes WHERE codigo = '" + codigo +
+								"' AND id_estudiante != " + to_string(id_estudiante) + ";";
+
+							const char* c = consulta.c_str();
+
+							int q_estado = mysql_query(cn.getConector(), c);
+
+							if (!q_estado) {
+
+								MYSQL_RES* resultado;
+								MYSQL_ROW fila;
+
+								resultado = mysql_store_result(cn.getConector());
+
+								fila = mysql_fetch_row(resultado);
+
+								if (fila) {
+
+									cout << "Error: El codigo ya existe." << endl;
+								}
+								else {
+
+									codigo_valido = true;
+								}
+
+								mysql_free_result(resultado);
+							}
+						}
+
+						cn.cerrar_conexion();
+					}
+				}
+
+			} while (!codigo_valido);
 
 			cout << "Ingrese Nombres: ";
 			getline(cin, nombres);
