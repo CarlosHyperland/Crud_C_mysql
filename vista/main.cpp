@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
 
-	string codigo, nombres, apellidos, direccion, fecha_nacimiento;
-	int telefono = 0, id_tipo_sangre = 0, id_estudiante = 0;
+	string codigo, nombres, apellidos, direccion, fecha_nacimiento, telefono;
+	int id_tipo_sangre = 0, id_estudiante = 0;
 
 	int opcion = 0;
 
@@ -68,8 +68,6 @@ int main() {
 						cout << "Error: Formato invalido. Ejemplo: E001" << endl;
 					}
 					else {
-
-						// VALIDAR CODIGO DUPLICADO
 
 						ConexionBD cn;
 
@@ -214,9 +212,34 @@ int main() {
 
 			} while (!direccion_valida);
 
-			cout << "Ingrese Telefono: ";
-			cin >> telefono;
-			cin.ignore();
+			// VALIDACION TELEFONO
+
+			bool telefono_valido = false;
+
+			do {
+
+				cout << "Ingrese Telefono: ";
+				getline(cin, telefono);
+
+				if (telefono.empty()) {
+
+					cout << "Error: El telefono es obligatorio." << endl;
+				}
+				else {
+
+					regex formato_telefono("^[0-9]{8}$");
+
+					if (!regex_match(telefono, formato_telefono)) {
+
+						cout << "Error: El telefono debe contener exactamente 8 numeros." << endl;
+					}
+					else {
+
+						telefono_valido = true;
+					}
+				}
+
+			} while (!telefono_valido);
 
 			cout << "Ingrese Fecha Nacimiento: ";
 			getline(cin, fecha_nacimiento);
@@ -430,9 +453,34 @@ int main() {
 
 			} while (!direccion_valida);
 
-			cout << "Ingrese Telefono: ";
-			cin >> telefono;
-			cin.ignore();
+			// VALIDACION TELEFONO
+
+			bool telefono_valido = false;
+
+			do {
+
+				cout << "Ingrese Telefono: ";
+				getline(cin, telefono);
+
+				if (telefono.empty()) {
+
+					cout << "Error: El telefono es obligatorio." << endl;
+				}
+				else {
+
+					regex formato_telefono("^[0-9]{8}$");
+
+					if (!regex_match(telefono, formato_telefono)) {
+
+						cout << "Error: El telefono debe contener exactamente 8 numeros." << endl;
+					}
+					else {
+
+						telefono_valido = true;
+					}
+				}
+
+			} while (!telefono_valido);
 
 			cout << "Ingrese Fecha Nacimiento: ";
 			getline(cin, fecha_nacimiento);
