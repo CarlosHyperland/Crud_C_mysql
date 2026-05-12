@@ -178,8 +178,41 @@ int main() {
 
 			} while (!apellidos_validos);
 
-			cout << "Ingrese Direccion: ";
-			getline(cin, direccion);
+			// VALIDACION DIRECCION
+
+			bool direccion_valida = false;
+
+			do {
+
+				cout << "Ingrese Direccion: ";
+				getline(cin, direccion);
+
+				if (direccion.empty()) {
+
+					cout << "Error: La direccion es obligatoria." << endl;
+				}
+				else if (direccion.length() > 100) {
+
+					cout << "Error: La direccion no puede tener mas de 100 caracteres." << endl;
+				}
+				else {
+
+					regex caracteres_peligrosos(
+						"('|\"|;|--|=|<|>|DROP|DELETE|INSERT|UPDATE|SELECT)",
+						regex_constants::icase
+					);
+
+					if (regex_search(direccion, caracteres_peligrosos)) {
+
+						cout << "Error: La direccion contiene caracteres o palabras no permitidas." << endl;
+					}
+					else {
+
+						direccion_valida = true;
+					}
+				}
+
+			} while (!direccion_valida);
 
 			cout << "Ingrese Telefono: ";
 			cin >> telefono;
@@ -252,8 +285,6 @@ int main() {
 						cout << "Error: Formato invalido. Ejemplo: E001" << endl;
 					}
 					else {
-
-						// VALIDAR CODIGO DUPLICADO
 
 						ConexionBD cn;
 
@@ -363,8 +394,41 @@ int main() {
 
 			} while (!apellidos_validos);
 
-			cout << "Ingrese Direccion: ";
-			getline(cin, direccion);
+			// VALIDACION DIRECCION
+
+			bool direccion_valida = false;
+
+			do {
+
+				cout << "Ingrese Direccion: ";
+				getline(cin, direccion);
+
+				if (direccion.empty()) {
+
+					cout << "Error: La direccion es obligatoria." << endl;
+				}
+				else if (direccion.length() > 100) {
+
+					cout << "Error: La direccion no puede tener mas de 100 caracteres." << endl;
+				}
+				else {
+
+					regex caracteres_peligrosos(
+						"('|\"|;|--|=|<|>|DROP|DELETE|INSERT|UPDATE|SELECT)",
+						regex_constants::icase
+					);
+
+					if (regex_search(direccion, caracteres_peligrosos)) {
+
+						cout << "Error: La direccion contiene caracteres o palabras no permitidas." << endl;
+					}
+					else {
+
+						direccion_valida = true;
+					}
+				}
+
+			} while (!direccion_valida);
 
 			cout << "Ingrese Telefono: ";
 			cin >> telefono;
